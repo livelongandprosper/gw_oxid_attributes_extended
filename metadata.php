@@ -19,7 +19,7 @@ $aModule = array(
     'id'           => 'gw_oxid_attributes_extended',
     'title'        => 'Erweiterte Attribute',
 //     'thumbnail'    => 'out/admin/img/logo.jpg',
-    'version'      => '1.0.1',
+    'version'      => '1.0.2',
     'author'       => 'Gregor Wendland',
     'email'		   => 'kontakt@gewend.de',
     'url'		   => 'https://www.gewend.de',
@@ -29,13 +29,16 @@ $aModule = array(
 								<li>Anzeige des Attributes via Text-Attribut-ID auf Artikel-Detailseite oxarticle::getAttributesByIdent()</li>
 								<li>Pro Attribut kann eingestellt werden, ob es auf der Detailseite angezeigt werden soll oder nicht</li>
 								<li>Zeigt alle anderen Farben eines Models (erster Teil der Artikelnummer) in der Detailansicht an</li>
+								<li>Macht es möglich, Attribute in das Generieren von Artikel-SEO-URLs einzubeziehen</li>
 							</ul>
 						',
     ),
     'extend'       => array(
 		OxidEsales\Eshop\Application\Model\Article::class => gw\gw_oxid_attributes_extended\Application\Model\Article::class,
+		OxidEsales\Eshop\Application\Model\SeoEncoderArticle::class => gw\gw_oxid_attributes_extended\Application\Model\SeoEncoderArticle::class,
 		OxidEsales\Eshop\Application\Model\ArticleList::class => gw\gw_oxid_attributes_extended\Application\Model\ArticleList::class,
 		OxidEsales\Eshop\Application\Model\AttributeList::class => gw\gw_oxid_attributes_extended\Application\Model\AttributeList::class,
+
     ),
     'settings'		=> array(
 		array('group' => 'gw_oxid_attributes_extended', 'name' => 'gw_oxid_attributes_extended_color_attr', 'type' => 'str', 'value' => 'colorname'),
@@ -59,6 +62,7 @@ $aModule = array(
 			"petrol" => "#304B54",
 			"rot" => "#C40E00",
 			"bordeaux" => "#5E2129",
+			"dunkelrot" => "#5E2129",
 			"violett" => "#5900B8",
 			"pink/rosa" => "#D7A6D7",
 			"grün" => "#006400",

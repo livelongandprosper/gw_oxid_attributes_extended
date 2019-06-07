@@ -13,10 +13,22 @@ class Article extends Article_parent {
 	protected $detailsAttributeList = null;
 
 	/**
+	 * Object holding the list of attributes and attribute values that should be used for seo url generation
+	 * @var \OxidEsales\Eshop\Application\Model\AttributeList
+	 */
+	protected $seoAttributeList = null;
+
+	/**
 	 * Array holding objects holding the list of attributes and attribute values associated with this article and displayable on details page
 	 * @var \OxidEsales\Eshop\Application\Model\AttributeList
 	 */
 	protected $attributesByIdent = array();
+
+	/**
+	 * @var array
+	 */
+	protected $oModelArticlesList = null;
+
 
 	private $_colorIcon = null;
 
@@ -33,6 +45,20 @@ class Article extends Article_parent {
 		}
 
 		return $this->detailsAttributeList;
+	}
+
+	/**
+	 * Loads and returns attribute list for seo url generation
+	 *
+	 * @return \OxidEsales\Eshop\Application\Model\AttributeList
+	 */
+	public function getSeoAttributeList() {
+		if ($this->seoAttributeList === null) {
+			$this->seoAttributeList = oxNew(\OxidEsales\Eshop\Application\Model\AttributeList::class);
+			$this->seoAttributeList->loadAttributesForArticleSeoUrl($this->getId(), $this->getParentId());
+		}
+
+		return $this->seoAttributeList;
 	}
 
 	/**
@@ -62,43 +88,43 @@ class Article extends Article_parent {
 	 * @return |null
 	 */
 	public function getModelArticles() {
-		$myConfig = $this->getConfig();
-		$article_number_db_field = $myConfig->getConfigParam('gw_oxid_attributes_extended_model_dbfield');
-		$article_number = $this->{'oxarticles__'.$article_number_db_field}->value;
-		$model_number_separator = $myConfig->getConfigParam('gw_oxid_attributes_extended_model_separator');
-		$model_number = "";
-		$oModelList = null;
+		if($this->oModelArticlesList === null) {
+			$myConfig = $this->getConfig();
+			$article_number_db_field = $myConfig->getConfigParam('gw_oxid_attributes_extended_model_dbfield');
+			$article_number = $this->{'oxarticles__'.$article_number_db_field}->value;
+			$model_number_separator = $myConfig->getConfigParam('gw_oxid_attributes_extended_model_separator');
+			$model_number = "";
+			$this->oModelArticlesList = null;
 
-		if($article_number && $model_number_separator && $separator_string_position = strpos($article_number, $model_number_separator)) {
-			$model_number = substr( $article_number, 0, $separator_string_position+1 );
+			if($article_number && $model_number_separator && $separator_string_position = strpos($article_number, $model_number_separator)) {
+				$model_number = substr( $article_number, 0, $separator_string_position+1 );
+			}
+
+			if($model_number) {
+				$sArticleTable = $this->getViewName();
+
+				// $sFieldList = $this->getSelectFields();
+				$sFieldList = "OXID";
+				$sSearch = "
+					select 
+						$sFieldList
+					from
+						$sArticleTable
+					where 
+							" . $this->getSqlActiveSnippet() . "
+						and $sArticleTable.$article_number_db_field LIKE '$model_number%'
+						and $sArticleTable.OXPARENTID = ''
+						# and $sArticleTable.OXID != '".$this->getId()."' # uncomment this line if the current article should not be listed
+				";
+
+				// TODO: order by what??
+				// $sSearch .= ' order by rand() ';
+
+				$this->oModelArticlesList = oxNew(\OxidEsales\Eshop\Application\Model\ArticleList::class);
+				$this->oModelArticlesList->selectString($sSearch);
+			}
 		}
-
-		if($model_number) {
-			$sArticleTable = $this->getViewName();
-
-			// $sFieldList = $this->getSelectFields();
-			$sFieldList = "OXID";
-			$sSearch = "
-			select 
-				$sFieldList
-		  	from
-		  		$sArticleTable
-		  	where 
-		  			" . $this->getSqlActiveSnippet() . "
-		  		and $sArticleTable.$article_number_db_field LIKE '$model_number%'
-		  		and $sArticleTable.OXPARENTID = ''
-		  		# and $sArticleTable.OXID != '".$this->getId()."' # uncomment this line if the current article should not be listed
-		  		
-		  	";
-
-			// TODO: order by what??
-			// $sSearch .= ' order by rand() ';
-
-			$oModelList = oxNew(\OxidEsales\Eshop\Application\Model\ArticleList::class);
-			$oModelList->selectString($sSearch);
-		}
-
-		return $oModelList;
+		return $this->oModelArticlesList;
 	}
 
 	/**

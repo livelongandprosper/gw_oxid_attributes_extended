@@ -45,6 +45,7 @@
 
 		public static function onActivate() {
 			self::add_db_field('oxattribute', 'gw_display_on_detailspage', "TINYINT(1) UNSIGNED DEFAULT 1 NOT NULL COMMENT 'defines if attribute should be shown on details page'");
+			self::add_db_field('oxattribute', 'gw_use_for_seo', "TINYINT(1) UNSIGNED DEFAULT 0 NOT NULL COMMENT 'defines if attribute should be used for article seo url generation'");
 
 			self::add_db_field('oxattribute', 'gw_attribute_id', "VARCHAR(20) NOT NULL COMMENT 'defines an id which allows to load a specific attribute at a certain position in template'");
 
@@ -52,6 +53,8 @@
 				self::add_db_key('oxarticles', 'gw_OXMPN_OXPARENTID', array("OXMPN", "OXPARENTID"));
 				self::add_db_key('oxattribute', 'gw_key_ident', array("gw_attribute_id"));
 				self::add_db_key('oxattribute', 'gw_key_detailspage', array("gw_display_on_detailspage"));
+				self::add_db_key('oxattribute', 'gw_key_seo', array("gw_use_for_seo"));
+
 			}	catch (OxidEsales\Eshop\Core\Exception\DatabaseErrorException $e) {
 				// do nothing... php will ignore and continue
 			}

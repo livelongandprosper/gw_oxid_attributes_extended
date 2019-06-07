@@ -20,3 +20,13 @@
         <input class="edittext" type="text" name="editval[oxattribute__gw_attribute_id]" value='[{if $edit->oxattribute__gw_attribute_id->value}][{$edit->oxattribute__gw_attribute_id->value}][{/if}]' [{$readonly}]>
     </td>
 </tr>
+
+<tr>
+    <td class="edittext" width="120">
+        Für die Generierung von SEO URLs verwenden
+    </td>
+    <td class="edittext">
+        <input type="hidden" name="editval[oxattribute__gw_use_for_seo]" value='0' [{$readonly}]>
+        <input class="edittext" type="checkbox" name="editval[oxattribute__gw_use_for_seo]" value='1' [{if $edit->oxattribute__gw_use_for_seo->value == 1}]checked[{/if}] [{$readonly}]>
+    </td>
+</tr>
