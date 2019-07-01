@@ -1,6 +1,10 @@
 # Extended Attributes
 
-...
+**Features**
+- display attribute value via attribut id on details page (oxarticle::getAttributesByIdent())
+- every attribute is configurable as "display on details page"
+- shows every article of the that has the same attribute value (one attribute is configurable) 
+- involve attribute value on generating seo urls
 
 ## Install
 - This module has to be put to the folder
