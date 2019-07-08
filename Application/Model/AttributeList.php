@@ -11,6 +11,7 @@
 		 */
 		public function loadAttributesDisplayableOnDetailsPage($sArtId, $sParentId = null) {
 			if ($sArtId) {
+				$myConfig = $this->getConfig();
 				$oDb = \OxidEsales\Eshop\Core\DatabaseProvider::getDb(\OxidEsales\Eshop\Core\DatabaseProvider::FETCH_MODE_ASSOC);
 
 				$sAttrViewName = getViewName('oxattribute');
@@ -23,7 +24,7 @@
 
 				$aAttributes = $oDb->getAll(sprintf($sSelect, $sArtId));
 
-				if ($sParentId) {
+				if ($myConfig->getConfigParam('gw_oxid_attributes_extended_merge_parent') && $sParentId) {
 					$aParentAttributes = $oDb->getAll(sprintf($sSelect, $sParentId));
 					$aAttributes = $this->_mergeAttributes($aAttributes, $aParentAttributes);
 				}
@@ -40,6 +41,7 @@
 		 */
 		public function loadAttributesForArticleSeoUrl($sArtId, $sParentId = null) {
 			if ($sArtId) {
+				$myConfig = $this->getConfig();
 				$oDb = \OxidEsales\Eshop\Core\DatabaseProvider::getDb(\OxidEsales\Eshop\Core\DatabaseProvider::FETCH_MODE_ASSOC);
 
 				$sAttrViewName = getViewName('oxattribute');
@@ -52,7 +54,7 @@
 
 				$aAttributes = $oDb->getAll(sprintf($sSelect, $sArtId));
 
-				if ($sParentId) {
+				if ($myConfig->getConfigParam('gw_oxid_attributes_extended_merge_parent') && $sParentId) {
 					$aParentAttributes = $oDb->getAll(sprintf($sSelect, $sParentId));
 					$aAttributes = $this->_mergeAttributes($aAttributes, $aParentAttributes);
 				}
@@ -70,6 +72,7 @@
 		 */
 		public function loadAttributesByIdent($sArtId, $sParentId = null, $sAttribute_ident) {
 			if ($sArtId && $sAttribute_ident) {
+				$myConfig = $this->getConfig();
 				$oDb = \OxidEsales\Eshop\Core\DatabaseProvider::getDb(\OxidEsales\Eshop\Core\DatabaseProvider::FETCH_MODE_ASSOC);
 
 				$sAttrViewName = getViewName('oxattribute');
@@ -82,7 +85,7 @@
 
 				$aAttributes = $oDb->getAll(sprintf($sSelect, $sArtId, $sAttribute_ident));
 
-				if ($sParentId) {
+				if ($myConfig->getConfigParam('gw_oxid_attributes_extended_merge_parent') && $sParentId) {
 					$aParentAttributes = $oDb->getAll(sprintf($sSelect, $sParentId, $sAttribute_ident));
 					$aAttributes = $this->_mergeAttributes($aAttributes, $aParentAttributes);
 				}

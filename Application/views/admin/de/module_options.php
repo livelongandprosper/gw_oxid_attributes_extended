@@ -9,6 +9,9 @@ $aLang = array(
 	'SHOP_MODULE_GROUP_gw_oxid_attributes_extended' => 'Modul-Einstellungen',
 
 	// configuration parameters
+	'SHOP_MODULE_gw_oxid_attributes_extended_merge_parent' => 'Attribute vom Vaterartikel laden',
+	'HELP_SHOP_MODULE_gw_oxid_attributes_extended_merge_parent' => 'Wenn aktiv, werden zusätzlich zu den Attributen für einzelne Varianten auch die Attribute des Vaterartikels geladen und in das Ergebnis-Array gemischt.',
+
 	'SHOP_MODULE_gw_oxid_attributes_extended_model_dbfield' => 'Artikel-Datenbankfeld für Artikelnummer',
 	'HELP_SHOP_MODULE_gw_oxid_attributes_extended_model_dbfield' => '',
 

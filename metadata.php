@@ -19,7 +19,7 @@ $aModule = array(
     'id'           => 'gw_oxid_attributes_extended',
     'title'        => 'Erweiterte Attribute',
 //     'thumbnail'    => 'out/admin/img/logo.jpg',
-    'version'      => '1.0.2',
+    'version'      => '1.0.3',
     'author'       => 'Gregor Wendland',
     'email'		   => 'kontakt@gewend.de',
     'url'		   => 'https://www.gewend.de',
@@ -41,6 +41,7 @@ $aModule = array(
 
     ),
     'settings'		=> array(
+		array('group' => 'gw_oxid_attributes_extended', 'name' => 'gw_oxid_attributes_extended_merge_parent', 'type' => 'bool', 'value' => '0'),
 		array('group' => 'gw_oxid_attributes_extended', 'name' => 'gw_oxid_attributes_extended_color_attr', 'type' => 'str', 'value' => 'colorname'),
 		array('group' => 'gw_oxid_attributes_extended', 'name' => 'gw_oxid_attributes_extended_model_dbfield', 'type' => 'str', 'value' => 'oxmpn'),
 		array('group' => 'gw_oxid_attributes_extended', 'name' => 'gw_oxid_attributes_extended_model_separator', 'type' => 'str', 'value' => '.'),
