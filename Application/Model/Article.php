@@ -72,13 +72,22 @@ class Article extends Article_parent {
 	 * @param $attribute_ident
 	 * @return mixed
 	 */
-	public function getAttributesByIdent($attribute_ident) {
+	public function getAttributesByIdent($attribute_ident, $return_text = false) {
 		if (!isset($this->attributesByIdent[$attribute_ident])) {
 			$this->attributesByIdent[$attribute_ident] = oxNew(\OxidEsales\Eshop\Application\Model\AttributeList::class);
 			$this->attributesByIdent[$attribute_ident]->loadAttributesByIdent($this->getId(), $this->getParentId(), $attribute_ident);
 		}
-
-		return $this->attributesByIdent[$attribute_ident];
+		if($return_text) {
+			$return_value = "";
+			if(sizeof($this->attributesByIdent[$attribute_ident]) > 0) {
+				foreach($this->attributesByIdent[$attribute_ident] as $oAttribute) {
+					$return_value .= $oAttribute->oxattribute__oxvalue;
+				}
+			}
+			return $return_value;
+		} else {
+			return $this->attributesByIdent[$attribute_ident];
+		}
 	}
 
 	public $has_function_getModelArticles = true;
