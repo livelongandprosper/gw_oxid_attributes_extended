@@ -16,7 +16,7 @@ $aLang = array(
 	'HELP_SHOP_MODULE_gw_oxid_attributes_extended_model_dbfield' => '',
 
 	'SHOP_MODULE_gw_oxid_attributes_extended_model_separator' => 'Modelstamm-Nummer-Trennzeichen',
-	'HELP_SHOP_MODULE_gw_oxid_attributes_extended_model_separator' => 'Es wird davon ausgegangen, dass die Modelnummer aus der Artikelnummer ausgelesen wird und in der Artikelnummer kodiert ist. Die Modelnummer aus 835.0172 entspricht 835.',
+	'HELP_SHOP_MODULE_gw_oxid_attributes_extended_model_separator' => 'Es wird davon ausgegangen, dass die Modelnummer aus der Artikelnummer ausgelesen wird und in der Artikelnummer kodiert ist. Die Modelnummer aus 835.0172 entspricht 835.<br>Dieses Attribut ist wichtig, um die Geschwister-Artikel eines Models innerhalb des Shops zu verwenden.',
 
 	'SHOP_MODULE_gw_oxid_attributes_extended_color_attr' => 'Artikel-Farbbezeichnungsattribut',
 	'HELP_SHOP_MODULE_gw_oxid_attributes_extended_color_attr' => '',
