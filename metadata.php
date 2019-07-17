@@ -47,6 +47,7 @@ $aModule = array(
 		array('group' => 'gw_oxid_attributes_extended', 'name' => 'gw_oxid_attributes_extended_model_separator', 'type' => 'str', 'value' => '.'),
 		array('group' => 'gw_oxid_attributes_extended', 'name' => 'gw_oxid_attributes_extended_color_mapping', 'type' => 'aarr', 'value' => array(
 			"schwarz" => "#000000",
+			"schwarz gewachst" => "#000000",
 			"hellgrau" => "#C9C9C9",
 			"grau" => "#9C9C9C",
 			"dunkelgrau" => "#696969",
@@ -73,8 +74,9 @@ $aModule = array(
 			"orange" => "#E15501",
 			"beige" => "#FFFFEA",
 			"cremweiß" => "#F8FAEE",
-			"cremweß" => "#F8FAEE",
 			"cremeweiß" => "#F8FAEE",
+			"cremweß" => "#F8FAEE",
+			"cremeweß" => "#F8FAEE",
 			"weiß" => "#FFFFFF",
 		)),
     ),
