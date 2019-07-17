@@ -20,7 +20,7 @@
 				$sSelect = "select {$sAttrViewName}.*, o2a.* from {$sViewName} as o2a ";
 				$sSelect .= "left join {$sAttrViewName} on {$sAttrViewName}.oxid = o2a.oxattrid ";
 				$sSelect .= "where o2a.oxobjectid = '%s' and {$sAttrViewName}.gw_display_on_detailspage = 1 and o2a.oxvalue != '' ";
-				$sSelect .= "order by o2a.oxpos, {$sAttrViewName}.oxpos";
+				$sSelect .= "order by {$sAttrViewName}.oxpos, o2a.oxpos";
 
 				$aAttributes = $oDb->getAll(sprintf($sSelect, $sArtId));
 
@@ -50,7 +50,7 @@
 				$sSelect = "select {$sAttrViewName}.*, o2a.* from {$sViewName} as o2a ";
 				$sSelect .= "left join {$sAttrViewName} on {$sAttrViewName}.oxid = o2a.oxattrid ";
 				$sSelect .= "where o2a.oxobjectid = '%s' and {$sAttrViewName}.gw_use_for_seo = 1 and o2a.oxvalue != '' ";
-				$sSelect .= "order by o2a.oxpos, {$sAttrViewName}.oxpos";
+				$sSelect .= "order by {$sAttrViewName}.oxpos, o2a.oxpos";
 
 				$aAttributes = $oDb->getAll(sprintf($sSelect, $sArtId));
 
