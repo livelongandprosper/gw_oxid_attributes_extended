@@ -19,7 +19,7 @@ $aModule = array(
     'id'           => 'gw_oxid_attributes_extended',
     'title'        => 'Erweiterte Attribute',
 //     'thumbnail'    => 'out/admin/img/logo.jpg',
-    'version'      => '1.0.3',
+    'version'      => '1.0.4',
     'author'       => 'Gregor Wendland',
     'email'		   => 'kontakt@gewend.de',
     'url'		   => 'https://www.gewend.de',
@@ -30,6 +30,7 @@ $aModule = array(
 								<li>Pro Attribut kann eingestellt werden, ob es auf der Detailseite angezeigt werden soll oder nicht</li>
 								<li>Zeigt alle anderen Farben eines Models (erster Teil der Artikelnummer) in der Detailansicht an</li>
 								<li>Macht es möglich, Attribute in das Generieren von Artikel-SEO-URLs einzubeziehen</li>
+								<li>Ermöglicht dass einzelne Attribute in Kategorien als ODER-Verknüpfte Filter funktionieren können</li>
 							</ul>
 						',
     ),
@@ -94,6 +95,12 @@ $aModule = array(
 			'template' => 'page/details/inc/productmain.tpl',
 			'block' => 'details_productmain_selectlists',
 			'file' => 'Application/views/blocks/gw_details_productmain_selectlists.tpl'
+		),
+		array(
+			/*'theme' => 'flow',*/
+			'template' => 'widget/locator/attributes.tpl',
+			'block' => 'widget_locator_attributes',
+			'file' => 'Application/views/blocks/gw_widget_locator_attributes.tpl'
 		),
 	),
 	'events'       => array(
