@@ -2,7 +2,6 @@
 	namespace gw\gw_oxid_attributes_extended\Application\Model;
 
 	class AttributeList extends AttributeList_parent {
-
 		/**
 		 * Load displayable on detailspage attributes by article Id
 		 *
@@ -92,6 +91,159 @@
 
 				$this->assignArray($aAttributes);
 			}
+		}
+
+		/**
+		 * Extend std functionality so that multiple active values are supported.
+		 * If only one filter ist active show all possible values of that filter (multiple values within one filter are connected with OR)
+		 * @param $sCategoryId
+		 * @param $iLang
+		 * @return $this
+		 */
+		public function getCategoryAttributes($sCategoryId, $iLang) {
+			$aSessionFilter = \OxidEsales\Eshop\Core\Registry::getSession()->getVariable('session_attrfilter');
+			$number_active_filters = sizeof($aSessionFilter[$sCategoryId][0]);
+			$myConfig = $this->getConfig();
+
+			$oArtList = oxNew(\OxidEsales\Eshop\Application\Model\ArticleList::class);
+			$oArtList->loadCategoryIDs($sCategoryId, $aSessionFilter);
+
+			// if only one filter is selected we need to get the ids of all articles in category
+			$oArtList_single_filter = oxNew(\OxidEsales\Eshop\Application\Model\ArticleList::class);
+			if($number_active_filters == 1) {
+				$oArtList_single_filter->loadCategoryIDs($sCategoryId, array());
+			}
+
+			// Only if we have articles
+			if (count($oArtList) > 0) {
+				$oDb = \OxidEsales\Eshop\Core\DatabaseProvider::getDb();
+				$sArtIds = '';
+				foreach (array_keys($oArtList->getArray()) as $sId) {
+					if ($sArtIds) {
+						$sArtIds .= ',';
+					}
+					$sArtIds .= $oDb->quote($sId);
+				}
+				$sArtIds_single_filter = '';
+				foreach (array_keys($oArtList_single_filter->getArray()) as $sId) {
+					if ($sArtIds_single_filter) {
+						$sArtIds_single_filter .= ',';
+					}
+					$sArtIds_single_filter .= $oDb->quote($sId);
+				}
+
+				$sActCatQuoted = $oDb->quote($sCategoryId);
+				$sAttTbl = getViewName('oxattribute', $iLang);
+				$sO2ATbl = getViewName('oxobject2attribute', $iLang);
+				$sC2ATbl = getViewName('oxcategory2attribute', $iLang);
+
+				// get the first active filter
+				foreach ($aSessionFilter[$sCategoryId][$iLang] as $first_active_cat => $val) break; // in php 7.3+ we could use array_key_first()
+				$first_active_cat_quoted = $oDb->quote($first_active_cat);
+
+				// wenn ich nur innerhalb EINES attributes werte ausgewählt habe, müssen alle werte dieses attributes weiterhin zur auswahl stehen, alle anderen attributes, die zur auswahl stehen sollen nur dann angezeigt werden, wenn es auch artikel gibt, die dazu passen; habe ich einen weiteren filter ausgewählt, schränken sich ab da an alle andere filter ebenfalls ein; der fall das keine artiekl angezeigt werden können tritt so relativ selten ein
+				$sSelect = "SELECT DISTINCT att.oxid, att.oxtitle, o2a.oxvalue " .
+					"FROM $sAttTbl as att, $sO2ATbl as o2a ,$sC2ATbl as c2a " .
+					"WHERE
+							# all available filter attribute values of active filter category under consideration of activated filters
+							(att.oxid = o2a.oxattrid AND c2a.oxobjectid = $sActCatQuoted AND c2a.oxattrid = att.oxid AND o2a.oxvalue !='' AND o2a.oxobjectid IN ($sArtIds) )" .
+						($number_active_filters == 1 && $sArtIds_single_filter?" 
+						OR
+							# all available filter attribute values of single active filter 
+							(att.oxid = o2a.oxattrid AND c2a.oxobjectid = $sActCatQuoted AND c2a.oxattrid = att.oxid AND o2a.oxvalue !='' && att.oxid = $first_active_cat_quoted) AND o2a.oxobjectid IN ($sArtIds_single_filter)"
+							:"").
+					"ORDER BY c2a.oxsort , att.oxpos, att.oxtitle, o2a.oxvalue";
+
+				$rs = $oDb->select($sSelect);
+
+				if ($rs != false && $rs->count() > 0) {
+					while (!$rs->EOF && list($sAttId, $sAttTitle, $sAttValue) = $rs->fields) {
+
+						if (!$this->offsetExists($sAttId)) {
+							$oAttribute = oxNew(\OxidEsales\Eshop\Application\Model\Attribute::class);
+							$oAttribute->setTitle($sAttTitle);
+
+							$this->offsetSet($sAttId, $oAttribute);
+							$iLang = \OxidEsales\Eshop\Core\Registry::getLang()->getBaseLanguage();
+
+							if (isset($aSessionFilter[$sCategoryId][$iLang][$sAttId])) {
+								$oAttribute->setActiveValue($aSessionFilter[$sCategoryId][$iLang][$sAttId]);
+							}
+						} else {
+							$oAttribute = $this->offsetGet($sAttId);
+						}
+
+						$oAttribute->addValue($sAttValue);
+						$rs->fetchRow();
+					}
+				}
+
+				// handle variant filters
+				if ($myConfig->getConfigParam('gw_oxid_filter_oxvarselect')) {
+					$sArticleTable = getViewName('oxarticles', $iLang);
+
+					$sSelect_variantnames = "
+						SELECT DISTINCT
+							oxvarname 
+						FROM
+							$sArticleTable
+						WHERE
+							(
+								# all available filter attribute values of active filter category under consideration of activated filters
+								(OXID IN ($sArtIds) )
+							)
+							AND
+								# restrict to only one dimension variants
+								oxvarname NOT LIKE '%|%'
+							AND
+								oxvarname <> ''
+					;";
+
+					$rs_variantnames = $oDb->select($sSelect_variantnames);
+					if ($rs_variantnames != false && $rs_variantnames->count() > 0) {
+						while (!$rs_variantnames->EOF && list($varname) = $rs_variantnames->fields) {
+							if (!$this->offsetExists('varname@'.$varname)) {
+								$oAttribute = oxNew(\OxidEsales\Eshop\Application\Model\Attribute::class);
+								$oAttribute->setTitle($varname);
+
+								$this->offsetSet('varname@'.$varname, $oAttribute);
+								$iLang = \OxidEsales\Eshop\Core\Registry::getLang()->getBaseLanguage();
+
+								if (isset($aSessionFilter[$sCategoryId][$iLang]['varname@'.$varname])) {
+									$oAttribute->setActiveValue($aSessionFilter[$sCategoryId][$iLang]['varname@'.$varname]);
+								}
+							} else {
+								$oAttribute = $this->offsetGet('varname@'.$varname);
+							}
+
+							// get possible values for that variantname
+							$varname_quotet = $oDb->quote($varname);
+							$sSelect_variantselections = "
+								SELECT DISTINCT
+									oxvarselect
+								FROM
+									$sArticleTable
+								WHERE
+										OXPARENTID IN (SELECT OXID FROM $sArticleTable WHERE oxvarname = $varname_quotet)
+									AND
+										OXPARENTID IN ($sArtIds)
+							;";
+							$rs_variantselections = $oDb->select($sSelect_variantselections);
+
+							if ($rs_variantselections != false && $rs_variantselections->count() > 0) {
+								while (!$rs_variantselections->EOF && list($varariantselect) = $rs_variantselections->fields) {
+									$oAttribute->addValue($varariantselect);
+									$rs_variantselections->fetchRow();
+								}
+							}
+
+							$rs_variantnames->fetchRow();
+						}
+					}
+				}
+
+			}
+			return $this;
 		}
 	}
 ?>

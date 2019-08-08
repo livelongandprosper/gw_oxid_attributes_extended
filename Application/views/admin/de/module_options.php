@@ -24,5 +24,8 @@ $aLang = array(
 	'SHOP_MODULE_gw_oxid_attributes_extended_color_mapping' => 'Farbmappings',
 	'HELP_SHOP_MODULE_gw_oxid_attributes_extended_color_mapping' => '',
 
+	'SHOP_MODULE_gw_oxid_filter_oxvarselect' => 'Artikellisten nach Varianten filterbar machen (i.d.R. Größe)',
+	'HELP_SHOP_MODULE_gw_oxid_filter_oxvarselect' => '',
+
 
 );

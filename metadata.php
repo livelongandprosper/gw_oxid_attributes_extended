@@ -19,7 +19,7 @@ $aModule = array(
     'id'           => 'gw_oxid_attributes_extended',
     'title'        => 'Erweiterte Attribute',
 //     'thumbnail'    => 'out/admin/img/logo.jpg',
-    'version'      => '1.0.4',
+    'version'      => '1.0.5',
     'author'       => 'Gregor Wendland',
     'email'		   => 'kontakt@gewend.de',
     'url'		   => 'https://www.gewend.de',
@@ -30,15 +30,18 @@ $aModule = array(
 								<li>Pro Attribut kann eingestellt werden, ob es auf der Detailseite angezeigt werden soll oder nicht</li>
 								<li>Zeigt alle anderen Farben eines Models (erster Teil der Artikelnummer) in der Detailansicht an</li>
 								<li>Macht es möglich, Attribute in das Generieren von Artikel-SEO-URLs einzubeziehen</li>
-								<li>Ermöglicht dass einzelne Attribute in Kategorien als ODER-Verknüpfte Filter funktionieren können</li>
+								<li>Ermöglicht, dass mehrere Filter-Werte pro Attribut auswählbar sind - diese werden innerhalb des Attributes ODER-Verknüpft</li>
+								<li>Ermöglicht das Filtern nach eindimensionalen Varianten; die Variantenauswahlnamen (z.B. Größe) wird dann als Filter angezeigt, die verschiedenen Ausprägungen der Varianten sind dann auswählbar (z.B. S, L, XL, XXL)</li>
 							</ul>
 						',
     ),
     'extend'       => array(
 		OxidEsales\Eshop\Application\Model\Article::class => gw\gw_oxid_attributes_extended\Application\Model\Article::class,
-		OxidEsales\Eshop\Application\Model\SeoEncoderArticle::class => gw\gw_oxid_attributes_extended\Application\Model\SeoEncoderArticle::class,
 		OxidEsales\Eshop\Application\Model\ArticleList::class => gw\gw_oxid_attributes_extended\Application\Model\ArticleList::class,
+		OxidEsales\Eshop\Application\Model\Attribute::class => gw\gw_oxid_attributes_extended\Application\Model\Attribute::class,
 		OxidEsales\Eshop\Application\Model\AttributeList::class => gw\gw_oxid_attributes_extended\Application\Model\AttributeList::class,
+		OxidEsales\Eshop\Application\Model\Category::class => gw\gw_oxid_attributes_extended\Application\Model\Category::class,
+		OxidEsales\Eshop\Application\Model\SeoEncoderArticle::class => gw\gw_oxid_attributes_extended\Application\Model\SeoEncoderArticle::class,
 
     ),
     'settings'		=> array(
@@ -46,6 +49,7 @@ $aModule = array(
 		array('group' => 'gw_oxid_attributes_extended', 'name' => 'gw_oxid_attributes_extended_color_attr', 'type' => 'str', 'value' => 'colorname'),
 		array('group' => 'gw_oxid_attributes_extended', 'name' => 'gw_oxid_attributes_extended_model_dbfield', 'type' => 'str', 'value' => 'oxmpn'),
 		array('group' => 'gw_oxid_attributes_extended', 'name' => 'gw_oxid_attributes_extended_model_separator', 'type' => 'str', 'value' => '.'),
+		array('group' => 'gw_oxid_attributes_extended',	'name' => 'gw_oxid_filter_oxvarselect', 'type' => 'bool', 'value' => '1'),
 		array('group' => 'gw_oxid_attributes_extended', 'name' => 'gw_oxid_attributes_extended_color_mapping', 'type' => 'aarr', 'value' => array(
 			"schwarz" => "#000000",
 			"schwarz gewachst" => "#000000",
