@@ -14,19 +14,13 @@
 						<input type="hidden" name="fname" value="">
 					</div>
 
-					[{if $oView->getClassName() == 'alist'}]
-						<strong>[{oxmultilang ident="DD_LISTLOCATOR_FILTER_ATTRIBUTES"}]</strong>
-					[{/if}]
 					[{assign var="hasActiveFilter" value=false}]
 					[{foreach from=$attributes item=oFilterAttr key=sAttrID name=attr}]
 						[{assign var="hasActiveValue" value=false}]
+						[{assign var="sActiveValue" value=$oFilterAttr->getActiveValue()}]
 						<div class="btn-group">
-							<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-								<strong>[{$oFilterAttr->getTitle()}]:</strong>
-								[{assign var="sActiveValue" value=$oFilterAttr->getActiveValue()}]
-								[{if $sActiveValue}]
-									[{$sActiveValue}]
-								[{/if}]
+							<button type="button" class="btn btn-default btn-sm dropdown-toggle[{if $sActiveValue}] active[{/if}]" data-toggle="dropdown">
+								[{$oFilterAttr->getTitle()}][{if $sActiveValue}]: [{$sActiveValue}][{/if}]
 								<span class="caret"></span>
 							</button>
 

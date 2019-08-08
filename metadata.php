@@ -31,7 +31,7 @@ $aModule = array(
 								<li>Zeigt alle anderen Farben eines Models (erster Teil der Artikelnummer) in der Detailansicht an</li>
 								<li>Macht es möglich, Attribute in das Generieren von Artikel-SEO-URLs einzubeziehen</li>
 								<li>Ermöglicht, dass mehrere Filter-Werte pro Attribut auswählbar sind - diese werden innerhalb des Attributes ODER-Verknüpft</li>
-								<li>Ermöglicht das Filtern nach eindimensionalen Varianten; die Variantenauswahlnamen (z.B. Größe) wird dann als Filter angezeigt, die verschiedenen Ausprägungen der Varianten sind dann auswählbar (z.B. S, L, XL, XXL)</li>
+								<li>Ermöglicht das Filtern nach eindimensionalen Varianten; die Variantenauswahlnamen (z.B. Größe) wird dann als Filter angezeigt, die verschiedenen Ausprägungen der Varianten sind dann auswählbar (z.B. S, L, XL, XXL); der Variantenfilter funktioniert standardmäßig so, dass nur bestellbare Varianten angezeigt werden</li>
 							</ul>
 						',
     ),
@@ -50,6 +50,7 @@ $aModule = array(
 		array('group' => 'gw_oxid_attributes_extended', 'name' => 'gw_oxid_attributes_extended_model_dbfield', 'type' => 'str', 'value' => 'oxmpn'),
 		array('group' => 'gw_oxid_attributes_extended', 'name' => 'gw_oxid_attributes_extended_model_separator', 'type' => 'str', 'value' => '.'),
 		array('group' => 'gw_oxid_attributes_extended',	'name' => 'gw_oxid_filter_oxvarselect', 'type' => 'bool', 'value' => '1'),
+		array('group' => 'gw_oxid_attributes_extended',	'name' => 'gw_oxid_filter_oxvarselect_instock', 'type' => 'bool', 'value' => '1'),
 		array('group' => 'gw_oxid_attributes_extended', 'name' => 'gw_oxid_attributes_extended_color_mapping', 'type' => 'aarr', 'value' => array(
 			"schwarz" => "#000000",
 			"schwarz gewachst" => "#000000",

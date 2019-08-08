@@ -27,5 +27,6 @@ $aLang = array(
 	'SHOP_MODULE_gw_oxid_filter_oxvarselect' => 'Artikellisten nach Varianten filterbar machen (i.d.R. Größe)',
 	'HELP_SHOP_MODULE_gw_oxid_filter_oxvarselect' => '',
 
-
+	'SHOP_MODULE_gw_oxid_filter_oxvarselect_instock' => 'Variantenfilter müssen bestellbar sein',
+	'HELP_SHOP_MODULE_gw_oxid_filter_oxvarselect_instock' => 'Wenn der Variantenfilter aktiv ist, werden nur die Artikel angezeigt, die auch bestellbar sind.',
 );

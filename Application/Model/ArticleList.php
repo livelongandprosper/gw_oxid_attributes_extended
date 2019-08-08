@@ -23,6 +23,7 @@ class ArticleList extends ArticleList_parent {
 	 */
 	protected function _getFilterIdsSql($sCatId, $aFilter) {
 
+		$myConfig = $this->getConfig();
 		$sO2CView = getViewName('oxobject2category');
 		$sO2AView = getViewName('oxobject2attribute');
 
@@ -30,7 +31,6 @@ class ArticleList extends ArticleList_parent {
 		$iCnt = 0;
 		$oDb = \OxidEsales\Eshop\Core\DatabaseProvider::getDb();
 
-		// print_r($aFilter);
 
 		$has_real_oxattribute_filter = false;
 		$has_variant_filter = false;
@@ -48,6 +48,7 @@ class ArticleList extends ArticleList_parent {
 						}
 						$iLang = \OxidEsales\Eshop\Core\Registry::getLang()->getBaseLanguage();
 						$sArticleTable = getViewName('oxarticles', $iLang);
+						$oArticle_empty = oxNew(\OxidEsales\Eshop\Application\Model\Article::class);
 
 						foreach($sValue as $single_value) {
 							if($single_value) { // Filter values must not be empty
@@ -55,7 +56,29 @@ class ArticleList extends ArticleList_parent {
 									$sFilter_currentAttribute .= ' OR ';
 								}
 								$single_value = $oDb->quote($single_value);
-								$sFilter_currentAttribute .= "( oc.oxobjectid IN (SELECT DISTINCT OXPARENTID FROM $sArticleTable WHERE OXVARSELECT = $single_value))";
+								$sFilter_currentAttribute .= "
+									(
+										oc.oxobjectid IN (
+											SELECT DISTINCT
+												OXPARENTID
+											FROM
+												$sArticleTable
+											WHERE
+													OXVARSELECT = $single_value
+												AND
+													OXACTIVE = 1 
+												AND
+													OXHIDDEN = 0".
+												($myConfig->getConfigParam('gw_oxid_filter_oxvarselect_instock')?"
+												AND
+													(
+															($sArticleTable.oxstockflag = 2 AND $sArticleTable.oxstock > 0)
+														OR
+															($sArticleTable.oxstockflag = 3 AND $sArticleTable.oxstock > 0 )
+													) ":'').
+										")
+									)";
+								//echo $sFilter_currentAttribute;
 							}
 						}
 

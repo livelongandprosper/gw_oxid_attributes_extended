@@ -190,32 +190,22 @@
 						WHERE
 							(
 								# all available filter attribute values of active filter category under consideration of activated filters
-								(OXID IN ($sArtIds) )
+								(OXID IN ($sArtIds))
 							)
 							AND
 								# restrict to only one dimension variants
 								oxvarname NOT LIKE '%|%'
 							AND
 								oxvarname <> ''
+							AND
+								OXACTIVE = 1 
+							AND
+								OXHIDDEN = 0
 					;";
 
 					$rs_variantnames = $oDb->select($sSelect_variantnames);
 					if ($rs_variantnames != false && $rs_variantnames->count() > 0) {
 						while (!$rs_variantnames->EOF && list($varname) = $rs_variantnames->fields) {
-							if (!$this->offsetExists('varname@'.$varname)) {
-								$oAttribute = oxNew(\OxidEsales\Eshop\Application\Model\Attribute::class);
-								$oAttribute->setTitle($varname);
-
-								$this->offsetSet('varname@'.$varname, $oAttribute);
-								$iLang = \OxidEsales\Eshop\Core\Registry::getLang()->getBaseLanguage();
-
-								if (isset($aSessionFilter[$sCategoryId][$iLang]['varname@'.$varname])) {
-									$oAttribute->setActiveValue($aSessionFilter[$sCategoryId][$iLang]['varname@'.$varname]);
-								}
-							} else {
-								$oAttribute = $this->offsetGet('varname@'.$varname);
-							}
-
 							// get possible values for that variantname
 							$varname_quotet = $oDb->quote($varname);
 							$sSelect_variantselections = "
@@ -226,11 +216,43 @@
 								WHERE
 										OXPARENTID IN (SELECT OXID FROM $sArticleTable WHERE oxvarname = $varname_quotet)
 									AND
-										OXPARENTID IN ($sArtIds)
+										(
+											OXPARENTID IN ($sArtIds)".
+											($number_active_filters == 1 && $sArtIds_single_filter && $first_active_cat == 'varname@'.$varname?" OR OXPARENTID IN ($sArtIds_single_filter)":'')."
+										)
+									AND
+										oxvarselect <> ''
+									AND
+										OXACTIVE = 1 
+									AND
+										OXHIDDEN = 0".
+										($myConfig->getConfigParam('gw_oxid_filter_oxvarselect_instock')?"
+									AND
+										(
+												($sArticleTable.oxstockflag = 2 AND $sArticleTable.oxstock > 0)
+											OR
+												($sArticleTable.oxstockflag = 3 AND $sArticleTable.oxstock > 0 )
+										) ":'')."
+								ORDER BY
+									oxvarselect
 							;";
 							$rs_variantselections = $oDb->select($sSelect_variantselections);
 
 							if ($rs_variantselections != false && $rs_variantselections->count() > 0) {
+								if (!$this->offsetExists('varname@'.$varname)) {
+									$oAttribute = oxNew(\OxidEsales\Eshop\Application\Model\Attribute::class);
+									$oAttribute->setTitle($varname);
+
+									$this->offsetSet('varname@'.$varname, $oAttribute);
+									$iLang = \OxidEsales\Eshop\Core\Registry::getLang()->getBaseLanguage();
+
+									if (isset($aSessionFilter[$sCategoryId][$iLang]['varname@'.$varname])) {
+										$oAttribute->setActiveValue($aSessionFilter[$sCategoryId][$iLang]['varname@'.$varname]);
+									}
+								} else {
+									$oAttribute = $this->offsetGet('varname@'.$varname);
+								}
+
 								while (!$rs_variantselections->EOF && list($varariantselect) = $rs_variantselections->fields) {
 									$oAttribute->addValue($varariantselect);
 									$rs_variantselections->fetchRow();
