@@ -31,21 +31,21 @@
 							</button>
 
 							<ul class="dropdown-menu" role="menu">
-							[{foreach from=$oFilterAttr->getValues() item=sValue}]
-								[{assign var="sActiveValue" value=$oFilterAttr->getActiveValue($sValue)}]
-								[{if $sActiveValue}][{assign var="hasActiveValue" value=$sActiveValue}][{assign var="hasActiveFilter" value=$sActiveValue}][{/if}]
-								<li><label><input type="checkbox" name="attrfilter[[{$sAttrID}]][]" value="[{$sValue}]"[{if $sActiveValue == $sValue}] checked="checked"[{/if}]><span>[{$sValue}]</span></label></li>
-							[{/foreach}]
-							[{if $hasActiveValue}]
-								<li>
-									<label class="gw-reset-filter" href="#"><input type="checkbox" name="attrfilter[[{$sAttrID}]]" value=""><span>[{oxmultilang ident="GW_RESET_FILTER"}]</span></label>
-								</li>
-							[{/if}]
+								[{foreach from=$oFilterAttr->getValues() item=sValue}]
+									[{assign var="sActiveValue" value=$oFilterAttr->getActiveValue($sValue)}]
+									[{if $sActiveValue}][{assign var="hasActiveValue" value=$sActiveValue}][{assign var="hasActiveFilter" value=$sActiveValue}][{/if}]
+									<li><label><input type="checkbox" name="attrfilter[[{$sAttrID}]][]" value="[{$sValue}]"[{if $sActiveValue == $sValue}] checked="checked"[{/if}]><span>[{$sValue}]</span></label></li>
+								[{/foreach}]
+								[{if $hasActiveValue}]
+									<li>
+										<label class="gw-reset-filter" href="#"><input type="checkbox" name="attrfilter[[{$sAttrID}]]" value=""><span>[{oxmultilang ident="GW_RESET_FILTER"}]</span></label>
+									</li>
+								[{/if}]
 							</ul>
 						</div>
 					[{/foreach}]
                 </form>
-                {if $hasActiveFilter}]
+                [{if $hasActiveFilter}]
 					<button type="submit" class="btn btn-default btn-sm ml-2 gw-reset-all-filters">[{oxmultilang ident="GW_RESET_ALL_FILTERS"}]</button>
 				[{/if}]
 			</div>
