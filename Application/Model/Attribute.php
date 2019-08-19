@@ -41,4 +41,20 @@ class Attribute extends Attribute_parent {
 		return $this->_sActiveValue;
 	}
 
+	/**
+	 * @return int
+	 */
+	public function getNumberActiveValues() {
+		if($this->_sActiveValue !== '') {
+			return sizeof($this->_sActiveValue);
+		}
+		return 0;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getNumberValues() {
+		return sizeof($this->getValues());
+	}
 }
