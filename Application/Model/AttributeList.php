@@ -102,7 +102,7 @@
 		 */
 		public function getCategoryAttributes($sCategoryId, $iLang) {
 			$aSessionFilter = \OxidEsales\Eshop\Core\Registry::getSession()->getVariable('session_attrfilter');
-			$number_active_filters = sizeof($aSessionFilter[$sCategoryId][0]);
+			$number_active_filters = sizeof(array_filter($aSessionFilter[$sCategoryId][$iLang]));
 			$myConfig = $this->getConfig();
 
 			$oArtList = oxNew(\OxidEsales\Eshop\Application\Model\ArticleList::class);
@@ -138,7 +138,7 @@
 				$sC2ATbl = getViewName('oxcategory2attribute', $iLang);
 
 				// get the first active filter
-				foreach ($aSessionFilter[$sCategoryId][$iLang] as $first_active_cat => $val) break; // in php 7.3+ we could use array_key_first()
+				foreach (array_filter($aSessionFilter[$sCategoryId][$iLang]) as $first_active_cat => $val) break; // in php 7.3+ we could use array_key_first(); array_filter gives us an array of arrays with not empty child arrays
 				$first_active_cat_quoted = $oDb->quote($first_active_cat);
 
 				// wenn ich nur innerhalb EINES attributes werte ausgewählt habe, müssen alle werte dieses attributes weiterhin zur auswahl stehen, alle anderen attributes, die zur auswahl stehen sollen nur dann angezeigt werden, wenn es auch artikel gibt, die dazu passen; habe ich einen weiteren filter ausgewählt, schränken sich ab da an alle andere filter ebenfalls ein; der fall das keine artiekl angezeigt werden können tritt so relativ selten ein
