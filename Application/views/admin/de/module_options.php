@@ -6,7 +6,8 @@ $aLang = array(
     'charset'                                            => 'UTF-8',
 
 	// configuration groups
-	'SHOP_MODULE_GROUP_gw_oxid_attributes_extended' => 'Modul-Einstellungen',
+	'SHOP_MODULE_GROUP_gw_oxid_attributes_extended' => 'Allg. Modul-Einstellungen',
+	'SHOP_MODULE_GROUP_gw_oxid_attributes_extended_filter' => 'Kategorie-Filter',
 
 	// configuration parameters
 	'SHOP_MODULE_gw_oxid_attributes_extended_merge_parent' => 'Attribute vom Vaterartikel laden',
@@ -29,4 +30,6 @@ $aLang = array(
 
 	'SHOP_MODULE_gw_oxid_filter_oxvarselect_instock' => 'Variantenfilter müssen bestellbar sein',
 	'HELP_SHOP_MODULE_gw_oxid_filter_oxvarselect_instock' => 'Wenn der Variantenfilter aktiv ist, werden nur die Artikel angezeigt, die auch bestellbar sind.',
+	'SHOP_MODULE_gw_oxid_filter_hideifonlyone' => 'Filter die nur eine Auswahl haben nicht anzeigen',
+	'HELP_SHOP_MODULE_gw_oxid_filter_hideifonlyone' => 'Ist dies Option ausgewählt, wird eine Filter nicht angezeigt, wenn er noch nicht ausgewählt wurde und für ihn nur ein Wert zur Auswahl steht.',
 );

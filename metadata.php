@@ -19,7 +19,7 @@ $aModule = array(
     'id'           => 'gw_oxid_attributes_extended',
     'title'        => 'Erweiterte Attribute',
 //     'thumbnail'    => 'out/admin/img/logo.jpg',
-    'version'      => '1.0.5',
+    'version'      => '1.0.6',
     'author'       => 'Gregor Wendland',
     'email'		   => 'kontakt@gewend.de',
     'url'		   => 'https://www.gewend.de',
@@ -32,6 +32,7 @@ $aModule = array(
 								<li>Macht es möglich, Attribute in das Generieren von Artikel-SEO-URLs einzubeziehen</li>
 								<li>Ermöglicht, dass mehrere Filter-Werte pro Attribut auswählbar sind - diese werden innerhalb des Attributes ODER-Verknüpft</li>
 								<li>Ermöglicht das Filtern nach eindimensionalen Varianten; die Variantenauswahlnamen (z.B. Größe) wird dann als Filter angezeigt, die verschiedenen Ausprägungen der Varianten sind dann auswählbar (z.B. S, L, XL, XXL); der Variantenfilter funktioniert standardmäßig so, dass nur bestellbare Varianten angezeigt werden</li>
+								<li>Es ist möglich nur Filter mit mindestens 2 Auswahlmöglichkeiten anzuzeigen</li>
 							</ul>
 						',
     ),
@@ -49,8 +50,6 @@ $aModule = array(
 		array('group' => 'gw_oxid_attributes_extended', 'name' => 'gw_oxid_attributes_extended_color_attr', 'type' => 'str', 'value' => 'colorname'),
 		array('group' => 'gw_oxid_attributes_extended', 'name' => 'gw_oxid_attributes_extended_model_dbfield', 'type' => 'str', 'value' => 'oxmpn'),
 		array('group' => 'gw_oxid_attributes_extended', 'name' => 'gw_oxid_attributes_extended_model_separator', 'type' => 'str', 'value' => '.'),
-		array('group' => 'gw_oxid_attributes_extended',	'name' => 'gw_oxid_filter_oxvarselect', 'type' => 'bool', 'value' => '1'),
-		array('group' => 'gw_oxid_attributes_extended',	'name' => 'gw_oxid_filter_oxvarselect_instock', 'type' => 'bool', 'value' => '1'),
 		array('group' => 'gw_oxid_attributes_extended', 'name' => 'gw_oxid_attributes_extended_color_mapping', 'type' => 'aarr', 'value' => array(
 			"schwarz" => "#000000",
 			"schwarz gewachst" => "#000000",
@@ -85,6 +84,10 @@ $aModule = array(
 			"cremeweß" => "#F8FAEE",
 			"weiß" => "#FFFFFF",
 		)),
+		array('group' => 'gw_oxid_attributes_extended_filter',	'name' => 'gw_oxid_filter_hideifonlyone', 'type' => 'bool', 'value' => '1'),
+		array('group' => 'gw_oxid_attributes_extended_filter',	'name' => 'gw_oxid_filter_oxvarselect', 'type' => 'bool', 'value' => '1'),
+		array('group' => 'gw_oxid_attributes_extended_filter',	'name' => 'gw_oxid_filter_oxvarselect', 'type' => 'bool', 'value' => '1'),
+		array('group' => 'gw_oxid_attributes_extended_filter',	'name' => 'gw_oxid_filter_oxvarselect_instock', 'type' => 'bool', 'value' => '1'),
     ),
     'files'			=> array(
     ),

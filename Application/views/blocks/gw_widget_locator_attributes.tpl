@@ -1,4 +1,5 @@
 [{*$smarty.block.parent*}]
+[{assign var="config" value=$oViewConf->getConfig()}]
 [{if $attributes}]
 	<div class="row">
 		<div class="col-xs-12">
@@ -17,26 +18,29 @@
 					[{assign var="hasActiveFilter" value=false}]
 					[{foreach from=$attributes item=oFilterAttr key=sAttrID name=attr}]
 						[{assign var="hasActiveValue" value=false}]
-						[{assign var="sActiveValue" value=$oFilterAttr->getActiveValue()}]
-						<div class="btn-group">
-							<button type="button" class="btn btn-default btn-sm dropdown-toggle[{if $sActiveValue}] active[{/if}]" data-toggle="dropdown">
-								[{$oFilterAttr->getTitle()}][{if $sActiveValue}]: [{$sActiveValue}][{/if}]
-								<span class="caret"></span>
-							</button>
+						[{assign var="dActiveValueCount" value=$oFilterAttr->getNumberActiveValues()}]
 
-							<ul class="dropdown-menu" role="menu">
-								[{foreach from=$oFilterAttr->getValues() item=sValue}]
-									[{assign var="sActiveValue" value=$oFilterAttr->getActiveValue($sValue)}]
-									[{if $sActiveValue}][{assign var="hasActiveValue" value=$sActiveValue}][{assign var="hasActiveFilter" value=$sActiveValue}][{/if}]
-									<li><label><input type="checkbox" name="attrfilter[[{$sAttrID}]][]" value="[{$sValue}]"[{if $sActiveValue == $sValue}] checked="checked"[{/if}]><span>[{$sValue}]</span></label></li>
-								[{/foreach}]
-								[{if $hasActiveValue}]
-									<li>
-										<label class="gw-reset-filter" href="#"><input type="checkbox" name="attrfilter[[{$sAttrID}]]" value=""><span>[{oxmultilang ident="GW_RESET_FILTER"}]</span></label>
-									</li>
-								[{/if}]
-							</ul>
-						</div>
+						[{if !$config->getConfigParam('gw_oxid_filter_hideifonlyone') || $config->getConfigParam('gw_oxid_filter_hideifonlyone') && ($dActiveValueCount || $oFilterAttr->getNumberValues() > 1)}]
+							<div class="btn-group">
+								<button type="button" class="btn btn-default btn-sm dropdown-toggle[{if $dActiveValueCount}] active[{/if}]" data-toggle="dropdown">
+									<span class="filter-name">[{$oFilterAttr->getTitle()}]</span>[{*if $sActiveValue}]: [{$sActiveValue}][{/if*}]
+									<span class="caret"></span>
+								</button>
+
+								<ul class="dropdown-menu" role="menu">
+									[{foreach from=$oFilterAttr->getValues() item=sValue}]
+										[{assign var="sActiveValue" value=$oFilterAttr->getActiveValue($sValue)}]
+										[{if $sActiveValue}][{assign var="hasActiveValue" value=$sActiveValue}][{assign var="hasActiveFilter" value=$sActiveValue}][{/if}]
+										<li><label><input type="checkbox" name="attrfilter[[{$sAttrID}]][]" value="[{$sValue}]"[{if $sActiveValue == $sValue}] checked="checked"[{/if}]><span>[{$sValue}]</span></label></li>
+									[{/foreach}]
+									[{if $dActiveValueCount}]
+										<li>
+											<label class="gw-reset-filter" href="#"><input type="checkbox" name="attrfilter[[{$sAttrID}]]" value=""><span>[{oxmultilang ident="GW_RESET_FILTER"}]</span></label>
+										</li>
+									[{/if}]
+								</ul>
+							</div>
+						[{/if}]
 					[{/foreach}]
                 </form>
                 [{if $hasActiveFilter}]
