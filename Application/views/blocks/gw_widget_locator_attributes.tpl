@@ -23,7 +23,7 @@
 						[{if !$config->getConfigParam('gw_oxid_filter_hideifonlyone') || $config->getConfigParam('gw_oxid_filter_hideifonlyone') && ($dActiveValueCount || $oFilterAttr->getNumberValues() > 1)}]
 							<div class="btn-group">
 								<button type="button" class="btn btn-default btn-sm dropdown-toggle[{if $dActiveValueCount}] active[{/if}]" data-toggle="dropdown">
-									<span class="filter-name">[{$oFilterAttr->getTitle()}]</span>[{*if $sActiveValue}]: [{$sActiveValue}][{/if*}]
+									<span class="filter-name">[{if $oFilterAttr->get_gw_filter_name()}][{$oFilterAttr->get_gw_filter_name()}][{else}][{$oFilterAttr->getTitle()}][{/if}]</span>[{*if $sActiveValue}]: [{$sActiveValue}][{/if*}]
 									<span class="caret"></span>
 								</button>
 
