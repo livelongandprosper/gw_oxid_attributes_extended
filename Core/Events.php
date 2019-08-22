@@ -44,6 +44,8 @@
 		}
 
 		public static function onActivate() {
+			self::add_db_field('oxcategories', 'gw_deactivate_variant_filter', "TINYINT(1) UNSIGNED DEFAULT 0 NOT NULL COMMENT 'deactivates variant filter for specific category'");
+
 			self::add_db_field('oxattribute', 'gw_display_on_detailspage', "TINYINT(1) UNSIGNED DEFAULT 1 NOT NULL COMMENT 'defines if attribute should be shown on details page'");
 			self::add_db_field('oxattribute', 'gw_use_for_seo', "TINYINT(1) UNSIGNED DEFAULT 0 NOT NULL COMMENT 'defines if attribute should be used for article seo url generation'");
 

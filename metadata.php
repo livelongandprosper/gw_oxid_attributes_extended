@@ -19,7 +19,7 @@ $aModule = array(
     'id'           => 'gw_oxid_attributes_extended',
     'title'        => 'Erweiterte Attribute',
 //     'thumbnail'    => 'out/admin/img/logo.jpg',
-    'version'      => '1.0.6',
+    'version'      => '1.0.7',
     'author'       => 'Gregor Wendland',
     'email'		   => 'kontakt@gewend.de',
     'url'		   => 'https://www.gewend.de',
@@ -31,7 +31,7 @@ $aModule = array(
 								<li>Zeigt alle anderen Farben eines Models (erster Teil der Artikelnummer) in der Detailansicht an</li>
 								<li>Macht es möglich, Attribute in das Generieren von Artikel-SEO-URLs einzubeziehen</li>
 								<li>Ermöglicht, dass mehrere Filter-Werte pro Attribut auswählbar sind - diese werden innerhalb des Attributes ODER-Verknüpft</li>
-								<li>Ermöglicht das Filtern nach eindimensionalen Varianten; die Variantenauswahlnamen (z.B. Größe) wird dann als Filter angezeigt, die verschiedenen Ausprägungen der Varianten sind dann auswählbar (z.B. S, L, XL, XXL); der Variantenfilter funktioniert standardmäßig so, dass nur bestellbare Varianten angezeigt werden</li>
+								<li>Ermöglicht das Filtern nach eindimensionalen Varianten; die Variantenauswahlnamen (z.B. Größe) wird dann als Filter angezeigt, die verschiedenen Ausprägungen der Varianten sind dann auswählbar (z.B. S, L, XL, XXL); der Variantenfilter funktioniert standardmäßig so, dass nur bestellbare Varianten angezeigt werden; diese Filter können pro Kategorie deaktiviert werden</li>
 								<li>Es ist möglich nur Filter mit mindestens 2 Auswahlmöglichkeiten anzuzeigen</li>
 							</ul>
 						',
@@ -97,6 +97,11 @@ $aModule = array(
 			'template' => 'attribute_main.tpl',
 			'block' => 'admin_attribute_main_form',
 			'file' => 'Application/views/blocks/admin/admin_attribute_main_form.tpl'
+		),
+		array(
+			'template' => 'include/category_main_form.tpl',
+			'block' => 'admin_category_main_form',
+			'file' => 'Application/views/blocks/admin/admin_category_main_form.tpl'
 		),
 		array(
 			/*'theme' => 'flow',*/
