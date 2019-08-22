@@ -7,6 +7,23 @@ namespace gw\gw_oxid_attributes_extended\Application\Model;
  *
  */
 class Attribute extends Attribute_parent {
+
+	private $_gw_filter_name = null;
+
+	/**
+	 * make oxattribute__gw_filter_name a multilang field
+	 * @param $fieldName
+	 * @return bool
+	 */
+	public function isMultilingualField($fieldName) {
+		if(
+			$fieldName == 'gw_filter_name'
+		) {
+			return true;
+		}
+		return parent::isMultilingualField($fieldName);
+	}
+
     /**
      * Set attribute selected value
      *
@@ -57,4 +74,19 @@ class Attribute extends Attribute_parent {
 	public function getNumberValues() {
 		return sizeof($this->getValues());
 	}
+
+	/**
+	 *
+	 * @return |null
+	 */
+	public function get_gw_filter_name() {
+		if($this->_gw_filter_name === null) {
+			$oDb = \OxidEsales\Eshop\Core\DatabaseProvider::getDB();
+			$sAttViewName = getViewName('oxattribute');
+			$this->_gw_filter_name = $oDb->getOne("select gw_filter_name from $sAttViewName where OXTITLE={$oDb->quote($this->getTitle())}");
+			$this->oxattribute__gw_filter_name->value = $this->_gw_filter_name;
+		}
+		return $this->_gw_filter_name;
+	}
+
 }
