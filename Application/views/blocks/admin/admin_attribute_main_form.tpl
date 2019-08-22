@@ -1,6 +1,14 @@
 [{assign var="oConfig" value=$oViewConf->getConfig()}]
 
 [{$smarty.block.parent}]
+<tr>
+    <td class="edittext" width="120">
+        Filtername
+    </td>
+    <td class="edittext">
+        <input class="edittext" type="text" name="editval[oxattribute__gw_filter_name]" value='[{if $edit->oxattribute__gw_filter_name->value}][{$edit->oxattribute__gw_filter_name->value}][{/if}]' [{$readonly}]>
+    </td>
+</tr>
 
 <tr>
     <td class="edittext" width="120">
