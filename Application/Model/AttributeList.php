@@ -181,7 +181,7 @@
 				// handle variant filters
 				if ($myConfig->getConfigParam('gw_oxid_filter_oxvarselect')) {
 					$oCat = $this->getConfig()->getTopActiveView()->getActiveCategory();
-					if(!$oCat->oxcategories__gw_deactivate_variant_filter->rawValue) {
+					if(!$oCat->oxcategories__gw_deactivate_variant_filter->value) {
 						$sArticleTable = getViewName('oxarticles', $iLang);
 
 						$sSelect_variantnames = "
