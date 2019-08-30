@@ -69,13 +69,14 @@
 		 * @param string $sParentId parent id
 		 * @param string $sAttribute_ident attribute identifier
 		 */
-		public function loadAttributesByIdent($sArtId, $sParentId = null, $sAttribute_ident, $usecoretable=false) {
+		public function loadAttributesByIdent($sArtId, $sParentId = null, $sAttribute_ident, $usecoretable = false) {
 			if ($sArtId && $sAttribute_ident) {
 				$myConfig = $this->getConfig();
 				$oDb = \OxidEsales\Eshop\Core\DatabaseProvider::getDb(\OxidEsales\Eshop\Core\DatabaseProvider::FETCH_MODE_ASSOC);
 
-				$sAttrViewName = getViewName('oxattribute', $usecoretable);
-				$sViewName = getViewName('oxobject2attribute', $usecoretable);
+				$sAttrViewName = getViewName('oxattribute', ($usecoretable?0:\OxidEsales\Eshop\Core\Registry::getLang()->getBaseLanguage()));
+				$sViewName = getViewName('oxobject2attribute', ($usecoretable?0:\OxidEsales\Eshop\Core\Registry::getLang()->getBaseLanguage()
+				));
 
 				$sSelect = "select {$sAttrViewName}.*, o2a.* from {$sViewName} as o2a ";
 				$sSelect .= "left join {$sAttrViewName} on {$sAttrViewName}.oxid = o2a.oxattrid ";

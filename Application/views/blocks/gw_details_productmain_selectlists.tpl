@@ -13,8 +13,8 @@
     <div class="gw-article-color-picker">
         <ul class="amount-[{$oDetailsProduct->getModelArticles()|@sizeof}]">
             [{foreach from=$oDetailsProduct->getModelArticles() item="model_sibling" name="gw_model_articles"}]
-                [{if $model_sibling->getAttributesByIdent($config->getConfigParam('gw_oxid_attributes_extended_color_attr'))|count > 0}]
-                    [{assign var="color_name_attributes" value=$model_sibling->getAttributesByIdent($config->getConfigParam('gw_oxid_attributes_extended_color_attr'))}]
+                [{if $model_sibling->getAttributesByIdent($config->getConfigParam('gw_oxid_attributes_extended_color_attr'), false, true)|count > 0}]
+                    [{assign var="color_name_attributes" value=$model_sibling->getAttributesByIdent($config->getConfigParam('gw_oxid_attributes_extended_color_attr'), false, true)}]
                     [{foreach from=$color_name_attributes item="color_name_attribute"}]
                         [{assign var="color_name" value=$color_name_attribute->oxattribute__oxvalue->value}]
                     [{/foreach}]

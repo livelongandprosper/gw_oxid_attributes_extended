@@ -55,6 +55,10 @@
 			self::add_db_field('oxattribute', 'gw_filter_name_1', "VARCHAR(255) NOT NULL COMMENT 'gw_filter_name alt lang 1'");
 			self::add_db_field('oxattribute', 'gw_filter_name_2', "VARCHAR(255) NOT NULL COMMENT 'gw_filter_name alt lang 2'");
 
+			self::add_db_field('oxattribute', 'gw_alt_title', "VARCHAR(255) NOT NULL COMMENT 'alt title'");
+			self::add_db_field('oxattribute', 'gw_alt_title_1', "VARCHAR(255) NOT NULL COMMENT 'gw_alt_title alt lang 1'");
+			self::add_db_field('oxattribute', 'gw_alt_title_2', "VARCHAR(255) NOT NULL COMMENT 'gw_alt_title alt lang 2'");
+
 			try {
 				self::add_db_key('oxarticles', 'gw_OXMPN_OXPARENTID', array("OXMPN", "OXPARENTID"));
 				self::add_db_key('oxattribute', 'gw_oxtitle', array("OXTITLE"));

@@ -72,10 +72,10 @@ class Article extends Article_parent {
 	 * @param $attribute_ident
 	 * @return mixed
 	 */
-	public function getAttributesByIdent($attribute_ident, $return_text = false) {
+	public function getAttributesByIdent($attribute_ident, $return_text = false, $usecoretable = false) {
 		if (!isset($this->attributesByIdent[$attribute_ident])) {
 			$this->attributesByIdent[$attribute_ident] = oxNew(\OxidEsales\Eshop\Application\Model\AttributeList::class);
-			$this->attributesByIdent[$attribute_ident]->loadAttributesByIdent($this->getId(), $this->getParentId(), $attribute_ident, true);
+			$this->attributesByIdent[$attribute_ident]->loadAttributesByIdent($this->getId(), $this->getParentId(), $attribute_ident, $usecoretable);
 		}
 		if($return_text) {
 			$return_value = "";
@@ -146,7 +146,7 @@ class Article extends Article_parent {
 			$color3 = "#999999";
 			$colors = array();
 			$myConfig = $this->getConfig();
-			$color_attributes = $this->getAttributesByIdent( $myConfig->getConfigParam('gw_oxid_attributes_extended_color_attr') );
+			$color_attributes = $this->getAttributesByIdent( $myConfig->getConfigParam('gw_oxid_attributes_extended_color_attr'), false, true );
 
 			$color_mapping_array = $myConfig->getConfigParam('gw_oxid_attributes_extended_color_mapping');
 			array_change_key_case($color_mapping_array, CASE_LOWER);

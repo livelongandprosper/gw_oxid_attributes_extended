@@ -18,6 +18,7 @@ class Attribute extends Attribute_parent {
 	public function isMultilingualField($fieldName) {
 		if(
 			$fieldName == 'gw_filter_name'
+		 || $fieldName == 'gw_alt_title'
 		) {
 			return true;
 		}

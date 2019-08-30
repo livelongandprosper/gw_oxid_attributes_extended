@@ -4,7 +4,7 @@
  * @author 	Gregor Wendland <gregor@gewend.de>
  * @copyright Copyright (c) 2018-2019, Gregor Wendland
  * @package gw
- * @version 2019-01-09
+ * @version 2019-08-28
  */
 
 /**
@@ -19,7 +19,7 @@ $aModule = array(
     'id'           => 'gw_oxid_attributes_extended',
     'title'        => 'Erweiterte Attribute',
 //     'thumbnail'    => 'out/admin/img/logo.jpg',
-    'version'      => '1.0.7',
+    'version'      => '1.0.8',
     'author'       => 'Gregor Wendland',
     'email'		   => 'kontakt@gewend.de',
     'url'		   => 'https://www.gewend.de',
@@ -33,6 +33,8 @@ $aModule = array(
 								<li>Ermöglicht, dass mehrere Filter-Werte pro Attribut auswählbar sind - diese werden innerhalb des Attributes ODER-Verknüpft</li>
 								<li>Ermöglicht das Filtern nach eindimensionalen Varianten; die Variantenauswahlnamen (z.B. Größe) wird dann als Filter angezeigt, die verschiedenen Ausprägungen der Varianten sind dann auswählbar (z.B. S, L, XL, XXL); der Variantenfilter funktioniert standardmäßig so, dass nur bestellbare Varianten angezeigt werden; diese Filter können pro Kategorie deaktiviert werden</li>
 								<li>Es ist möglich nur Filter mit mindestens 2 Auswahlmöglichkeiten anzuzeigen</li>
+								<li>Es ist möglich pro Attribut einen abeichenden Titel für die Filter-Darstellung zu wählen (Filtertitel)</li>
+								<li>Es ist möglich pro Attribut einen abeichenden Titel zu definieren, der im Template ausgegeben werden kann</li>
 							</ul>
 						',
     ),

@@ -2,6 +2,21 @@
 
 [{$smarty.block.parent}]
 <tr>
+    <td class="edittext" colspan="2">
+        <hr>
+        <strong>Weitere Einstellungen</strong>
+    </td>
+</tr>
+
+<tr>
+    <td class="edittext" width="120">
+        Alternativer Titel
+    </td>
+    <td class="edittext">
+        <input class="edittext" type="text" name="editval[oxattribute__gw_alt_title]" value='[{if $edit->oxattribute__gw_filter_name->value}][{$edit->oxattribute__gw_alt_title->value}][{/if}]' [{$readonly}]>
+    </td>
+</tr>
+<tr>
     <td class="edittext" width="120">
         Filtername
     </td>
