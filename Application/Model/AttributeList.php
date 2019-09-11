@@ -85,9 +85,14 @@
 
 				$aAttributes = $oDb->getAll(sprintf($sSelect, $sArtId, $sAttribute_ident));
 
+				$aParentAttributes = null;
 				if ($myConfig->getConfigParam('gw_oxid_attributes_extended_merge_parent') && $sParentId) {
 					$aParentAttributes = $oDb->getAll(sprintf($sSelect, $sParentId, $sAttribute_ident));
 					$aAttributes = $this->_mergeAttributes($aAttributes, $aParentAttributes);
+				}
+
+				if(!$aAttributes && !$aParentAttributes && $sParentId) {
+					$aAttributes = $oDb->getAll(sprintf($sSelect, $sParentId, $sAttribute_ident));
 				}
 
 				$this->assignArray($aAttributes);
