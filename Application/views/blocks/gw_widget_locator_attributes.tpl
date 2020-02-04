@@ -30,14 +30,18 @@
                         [{foreach from=$attributes item=oFilterAttr key=sAttrID name=attr}]
                             [{assign var="hasActiveValue" value=false}]
                             [{assign var="dActiveValueCount" value=$oFilterAttr->getNumberActiveValues()}]
+                            [{assign var="boolfilter" value=false}]
+                            [{if $sAttrID == 'gw_sale'}][{assign var="boolfilter" value=true}][{/if}]
 
-                            [{if !$config->getConfigParam('gw_oxid_filter_hideifonlyone') || $config->getConfigParam('gw_oxid_filter_hideifonlyone') && ($dActiveValueCount || $oFilterAttr->getNumberValues() > 1) || $sAttrID == 'gw_sale' }]
+                            [{if !$config->getConfigParam('gw_oxid_filter_hideifonlyone') || $config->getConfigParam('gw_oxid_filter_hideifonlyone') && ($dActiveValueCount || $oFilterAttr->getNumberValues() > 1) || $sAttrID == 'gw_sale'}]
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-sm dropdown-toggle[{if $dActiveValueCount}] active[{/if}]" data-toggle="dropdown">
+                                    <button type="button" class="btn btn-default btn-sm[{if $boolfilter}] gw-single-filter[{else}] dropdown-toggle[{/if}][{if $dActiveValueCount}] active[{/if}]"[{if !$boolfilter}] data-toggle="dropdown"[{/if}]>
                                         <span class="filter-name">[{if $oFilterAttr->get_gw_filter_name()}][{$oFilterAttr->get_gw_filter_name()}][{else}][{$oFilterAttr->getTitle()}][{/if}]</span>[{*if $sActiveValue}]<span class="colon">:&nbsp;</span><span class="active-value">[{$sActiveValue}]</span>[{/if*}]
+                                        [{if !$boolfilter}]
                                         <span class="caret"></span>
+                                        [{/if}]
                                     </button>
-
+                                    [{if !$boolfilter}]
                                     <ul class="dropdown-menu" role="menu">
                                         [{foreach from=$oFilterAttr->getValues() item=sValue}]
                                             [{assign var="sActiveValue" value=$oFilterAttr->getActiveValue($sValue)}]
@@ -50,6 +54,14 @@
                                             </li>
                                         [{/if}]
                                     </ul>
+                                    [{else}]
+                                        [{foreach from=$oFilterAttr->getValues() item=sValue}]
+                                            [{assign var="sActiveValue" value=$oFilterAttr->getActiveValue($sValue)}]
+                                            [{if $sActiveValue}][{assign var="hasActiveValue" value=$sActiveValue}][{assign var="hasActiveFilter" value=$sActiveValue}][{/if}]
+                                            <input type="checkbox" name="attrfilter[[{$sAttrID}]][]" value="[{$sValue}]"[{if $sActiveValue == $sValue}] checked="checked"[{/if}]>
+                                            <span class="gw-reset-filter" href="#"><input type="checkbox" name="attrfilter[[{$sAttrID}]]" value=""></span>
+                                        [{/foreach}]
+                                    [{/if}]
                                 </div>
                             [{/if}]
                         [{/foreach}]
