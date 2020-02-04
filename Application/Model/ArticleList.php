@@ -83,6 +83,34 @@ class ArticleList extends ArticleList_parent {
 						}
 
 						$has_variant_filter = true;
+					} elseif(strpos($sAttrId,'gw_sale') === 0) {
+						// handle sale filter
+						if ($sFilter) {
+							$sFilter .= ' AND '; // variant filter has to be combined with logical AND
+						}
+						$iLang = \OxidEsales\Eshop\Core\Registry::getLang()->getBaseLanguage();
+						$sArticleTable = getViewName('oxarticles', $iLang);
+						$oArticle_empty = oxNew(\OxidEsales\Eshop\Application\Model\Article::class);
+						$sFilter_currentAttribute .= "
+							(
+								oc.oxobjectid IN (
+									SELECT DISTINCT
+										OXID
+									FROM
+										$sArticleTable
+									WHERE
+											OXPARENTID = '' 
+										AND
+											OXTPRICE > 0 
+										AND
+											OXTPRICE > OXPRICE 
+										AND
+											OXACTIVE = 1 
+										AND
+											OXHIDDEN = 0".
+								")
+							)";
+						// echo $sFilter_currentAttribute;
 					} else {
 						// handle oxattribute filter
 						if ($sFilter) {
@@ -108,7 +136,7 @@ class ArticleList extends ArticleList_parent {
 				// std oxid behavior
 				if ($sValue) {
 					if ($sFilter) {
-						$sFilter .= ' or ';
+						$sFilter .= ' OR ';
 					}
 					$sValue = $oDb->quote($sValue);
 					$sAttrId = $oDb->quote($sAttrId);

@@ -60,6 +60,7 @@
 			self::add_db_field('oxattribute', 'gw_alt_title_2', "VARCHAR(255) NOT NULL COMMENT 'gw_alt_title alt lang 2'");
 
 			try {
+				self::add_db_key('oxarticles', 'gw_OXTPRICE_OXPRICE', array("OXTPRICE", "OXPRICE"));
 				self::add_db_key('oxarticles', 'gw_OXMPN_OXPARENTID', array("OXMPN", "OXPARENTID"));
 				self::add_db_key('oxattribute', 'gw_oxtitle', array("OXTITLE"));
 				self::add_db_key('oxattribute', 'gw_key_ident', array("gw_attribute_id"));

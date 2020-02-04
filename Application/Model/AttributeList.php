@@ -102,6 +102,7 @@
 		/**
 		 * Extend std functionality so that multiple active values are supported.
 		 * If only one filter ist active show all possible values of that filter (multiple values within one filter are connected with OR)
+		 * Different Filters are connected with AND
 		 * @param $sCategoryId
 		 * @param $iLang
 		 * @return $this
@@ -246,6 +247,7 @@
 								;";
 								$rs_variantselections = $oDb->select($sSelect_variantselections);
 
+								// set virtual attributes
 								if ($rs_variantselections != false && $rs_variantselections->count() > 0) {
 									if (!$this->offsetExists('varname@'.$varname)) {
 										$oAttribute = oxNew(\OxidEsales\Eshop\Application\Model\Attribute::class);
@@ -270,6 +272,50 @@
 								$rs_variantnames->fetchRow();
 							}
 						}
+					}
+				}
+
+				// handle sale filter
+				if ($myConfig->getConfigParam('gw_oxid_filter_sale')) {
+					$oCat = $this->getConfig()->getTopActiveView()->getActiveCategory();
+					$sArticleTable = getViewName('oxarticles', $iLang);
+
+					$sSelect_hasSaleArticles = "
+						SELECT DISTINCT
+							1 
+						FROM
+							$sArticleTable
+						WHERE
+								OXPARENTID = '' 
+							AND
+								OXTPRICE > 0 
+							AND
+								OXTPRICE > OXPRICE 
+							AND
+								OXID IN ($sArtIds)
+							AND
+								OXACTIVE = 1 
+							AND
+								OXHIDDEN = 0
+					;";
+					$rs_hasSaleArticles = $oDb->getOne($sSelect_hasSaleArticles);
+
+					if($rs_hasSaleArticles) {
+						if (!$this->offsetExists('gw_sale')) {
+							$oAttribute = oxNew(\OxidEsales\Eshop\Application\Model\Attribute::class);
+							$oAttribute->setTitle(\OxidEsales\Eshop\Core\Registry::getLang()->translateString('GW_SALE'));
+
+							$this->offsetSet('gw_sale', $oAttribute);
+							$iLang = \OxidEsales\Eshop\Core\Registry::getLang()->getBaseLanguage();
+
+							if (isset($aSessionFilter[$sCategoryId][$iLang]['gw_sale'])) {
+								$oAttribute->setActiveValue($aSessionFilter[$sCategoryId][$iLang]['gw_sale']);
+							}
+						} else {
+							$oAttribute = $this->offsetGet('gw_sale');
+						}
+
+						$oAttribute->addValue(\OxidEsales\Eshop\Core\Registry::getLang()->translateString('GW_ACTIVE'));
 					}
 				}
 			}

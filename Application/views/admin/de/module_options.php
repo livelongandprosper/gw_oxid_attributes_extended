@@ -32,4 +32,7 @@ $aLang = array(
 	'HELP_SHOP_MODULE_gw_oxid_filter_oxvarselect_instock' => 'Wenn der Variantenfilter aktiv ist, werden nur die Artikel angezeigt, die auch bestellbar sind.',
 	'SHOP_MODULE_gw_oxid_filter_hideifonlyone' => 'Filter die nur eine Auswahl haben nicht anzeigen',
 	'HELP_SHOP_MODULE_gw_oxid_filter_hideifonlyone' => 'Ist dies Option ausgewählt, wird eine Filter nicht angezeigt, wenn er noch nicht ausgewählt wurde und für ihn nur ein Wert zur Auswahl steht.',
+
+	'SHOP_MODULE_gw_oxid_filter_sale' => 'Sale-Filter',
+	'HELP_SHOP_MODULE_gw_oxid_filter_sale' => 'Ist dies Option ausgewählt, steht ein Sale-Filter zur Verfügung, der reduzierte Artikel anzeigt.',
 );

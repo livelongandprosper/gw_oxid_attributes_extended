@@ -19,7 +19,7 @@ $aModule = array(
     'id'           => 'gw_oxid_attributes_extended',
     'title'        => 'Erweiterte Attribute',
 //     'thumbnail'    => 'out/admin/img/logo.jpg',
-    'version'      => '1.0.8',
+    'version'      => '1.0.9',
     'author'       => 'Gregor Wendland',
     'email'		   => 'kontakt@gewend.de',
     'url'		   => 'https://www.gewend.de',
@@ -35,6 +35,7 @@ $aModule = array(
 								<li>Es ist möglich nur Filter mit mindestens 2 Auswahlmöglichkeiten anzuzeigen</li>
 								<li>Es ist möglich pro Attribut einen abeichenden Titel für die Filter-Darstellung zu wählen (Filtertitel)</li>
 								<li>Es ist möglich pro Attribut einen abeichenden Titel zu definieren, der im Template ausgegeben werden kann</li>
+								<li>Es ist möglich nach reduzierten Artikeln (UVP < Preis) zu filtern</li>
 							</ul>
 						',
     ),
@@ -90,6 +91,7 @@ $aModule = array(
 		array('group' => 'gw_oxid_attributes_extended_filter',	'name' => 'gw_oxid_filter_oxvarselect', 'type' => 'bool', 'value' => '1'),
 		array('group' => 'gw_oxid_attributes_extended_filter',	'name' => 'gw_oxid_filter_oxvarselect', 'type' => 'bool', 'value' => '1'),
 		array('group' => 'gw_oxid_attributes_extended_filter',	'name' => 'gw_oxid_filter_oxvarselect_instock', 'type' => 'bool', 'value' => '1'),
+		array('group' => 'gw_oxid_attributes_extended_filter',	'name' => 'gw_oxid_filter_sale', 'type' => 'bool', 'value' => '1'),
     ),
     'files'			=> array(
     ),
