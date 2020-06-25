@@ -6,7 +6,7 @@ $sLangName  = "Deutsch";
 $aLang = array(
 	'charset' => 'UTF-8',
 
-	// configuration grups
+	// configuration groups
 	'GW_SALE' => '% Sale',
 	'GW_ACTIVE' => 'aktiviert',
 );
