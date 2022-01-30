@@ -10,7 +10,7 @@
 /**
  * Metadata version
  */
-$sMetadataVersion = '2'; // see https://docs.oxid-esales.com/developer/en/6.0/modules/skeleton/metadataphp/version20.html
+$sMetadataVersion = '2.0'; // see https://docs.oxid-esales.com/developer/en/6.0/modules/skeleton/metadataphp/version20.html
 
 /**
  * Module information
@@ -19,7 +19,7 @@ $aModule = array(
     'id'           => 'gw_oxid_attributes_extended',
     'title'        => 'Erweiterte Attribute',
 //     'thumbnail'    => 'out/admin/img/logo.jpg',
-    'version'      => '1.0.9',
+    'version'      => '1.1.0',
     'author'       => 'Gregor Wendland',
     'email'		   => 'kontakt@gewend.de',
     'url'		   => 'https://www.gewend.de',
