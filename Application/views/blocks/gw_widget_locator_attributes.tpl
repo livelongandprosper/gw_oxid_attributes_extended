@@ -34,8 +34,8 @@
                             [{if $sAttrID == 'gw_sale'}][{assign var="boolfilter" value=true}][{/if}]
 
                             [{if !$config->getConfigParam('gw_oxid_filter_hideifonlyone') || $config->getConfigParam('gw_oxid_filter_hideifonlyone') && ($dActiveValueCount || $oFilterAttr->getNumberValues() > 1) || $sAttrID == 'gw_sale'}]
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-sm[{if $boolfilter}] gw-single-filter[{else}] dropdown-toggle[{/if}][{if $dActiveValueCount}] active[{/if}]"[{if !$boolfilter}] data-toggle="dropdown"[{/if}]>
+                                <div class="btn-group[{if $sAttrID == 'gw_sale'}] gw-sale-filter[{/if}]">
+                                    <button type="button" class="btn btn-default btn-sm[{if $boolfilter}] gw-single-filter[{else}] dropdown-toggle[{/if}][{if $dActiveValueCount}] active[{/if}][{if $sAttrID == 'gw_sale'}] gw-sale-filter-button[{/if}]"[{if !$boolfilter}] data-toggle="dropdown"[{/if}]>
                                         <span class="filter-name">[{if $oFilterAttr->get_gw_filter_name()}][{$oFilterAttr->get_gw_filter_name()}][{else}][{$oFilterAttr->getTitle()}][{/if}]</span>[{*if $sActiveValue}]<span class="colon">:&nbsp;</span><span class="active-value">[{$sActiveValue}]</span>[{/if*}]
                                         [{if !$boolfilter}]
                                         <span class="caret"></span>
