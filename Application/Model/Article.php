@@ -70,6 +70,8 @@ class Article extends Article_parent {
 
 	/**
 	 * @param $attribute_ident
+	 * @param mixed $return_text bool|string - delimit concatenated strings of attributes with more than 1 value
+	 * @param bool $usecoretable
 	 * @return mixed
 	 */
 	public function getAttributesByIdent($attribute_ident, $return_text = false, $usecoretable = false) {
@@ -81,6 +83,9 @@ class Article extends Article_parent {
 			$return_value = "";
 			if(sizeof($this->attributesByIdent[$attribute_ident]) > 0) {
 				foreach($this->attributesByIdent[$attribute_ident] as $oAttribute) {
+					if($return_value && is_string($return_value) && $oAttribute->oxattribute__oxvalue) {
+						$return_value .= (string)$return_text;
+					}
 					$return_value .= $oAttribute->oxattribute__oxvalue;
 				}
 			}
@@ -192,6 +197,16 @@ class Article extends Article_parent {
 			}
 		}
 		return $this->_colorIcon;
+	}
+
+	/**
+	 *
+	 */
+	public function getSimilarProductsBySpecificAttributes() {
+		$articleList = oxNew(\OxidEsales\Eshop\Application\Model\ArticleList::class);
+		// use $articleList->getSimilarProductsByAttribute()
+
+		return $articleList;
 	}
 }
 ?>
