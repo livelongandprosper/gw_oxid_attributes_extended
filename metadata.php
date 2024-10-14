@@ -36,6 +36,7 @@ $aModule = array(
 								<li>Es ist möglich pro Attribut einen abeichenden Titel für die Filter-Darstellung zu wählen (Filtertitel)</li>
 								<li>Es ist möglich pro Attribut einen abeichenden Titel zu definieren, der im Template ausgegeben werden kann</li>
 								<li>Es ist möglich nach reduzierten Artikeln (UVP < Preis) zu filtern</li>
+								<li>Man kann eine Liste von Artikeln generieren, die eines oder mehrere Attribute in gleicher Weise ausgeprägt haben (z.B. gleich Farbe oder gleiche Größe)</li>
 							</ul>
 						',
     ),
@@ -92,8 +93,6 @@ $aModule = array(
 		array('group' => 'gw_oxid_attributes_extended_filter',	'name' => 'gw_oxid_filter_oxvarselect', 'type' => 'bool', 'value' => '1'),
 		array('group' => 'gw_oxid_attributes_extended_filter',	'name' => 'gw_oxid_filter_oxvarselect_instock', 'type' => 'bool', 'value' => '1'),
 		array('group' => 'gw_oxid_attributes_extended_filter',	'name' => 'gw_oxid_filter_sale', 'type' => 'bool', 'value' => '1'),
-    ),
-    'files'			=> array(
     ),
 	'blocks' => array(
 		// backend
