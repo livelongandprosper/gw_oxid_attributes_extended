@@ -166,4 +166,8 @@ class ArticleList extends ArticleList_parent {
 			return $sFilterSelect . "{$sFilter} GROUP BY oc.oxobjectid";
 		}
 	}
+
+	public function getSimilarProductsByAttribute($similarAttributes, $attributesDifferent) {
+
+	}
 }
