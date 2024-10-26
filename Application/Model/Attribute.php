@@ -9,6 +9,7 @@ namespace gw\gw_oxid_attributes_extended\Application\Model;
 class Attribute extends Attribute_parent {
 
 	private $_gw_filter_name = null;
+	private $_gw_attribute_id = null;
 
 	/**
 	 * make oxattribute__gw_filter_name a multilang field
@@ -88,6 +89,15 @@ class Attribute extends Attribute_parent {
 			$this->oxattribute__gw_filter_name->value = $this->_gw_filter_name;
 		}
 		return $this->_gw_filter_name;
+	}
+	public function get_gw_attribute_id() {
+		if($this->_gw_attribute_id === null) {
+			$oDb = \OxidEsales\Eshop\Core\DatabaseProvider::getDB();
+			$sAttViewName = getViewName('oxattribute');
+			$this->_gw_attribute_id = $oDb->getOne("select gw_attribute_id from $sAttViewName where OXTITLE={$oDb->quote($this->getTitle())}");
+			$this->oxattribute__gw_attribute_id->value = $this->_gw_attribute_id;
+		}
+		return $this->_gw_attribute_id;
 	}
 
 }
